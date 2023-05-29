@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('videos', function (Blueprint $table) {
-            $table->id();
-            $table->string('title')->nullable();
-            $table->string('path');
-            $table->timestamps();
-        });
+        Schema::table('users', function (Blueprint $table) {
+        $table->enum('role', ['user', 'admin'])->default('user');
+        });        
     }
 
     /**
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('videos');
+        Schema::table('users', function (Blueprint $table) {
+        $table->dropColumn('role');
+        });
     }
 };

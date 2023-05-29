@@ -7,6 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\User;
 
 class RedirectIfAuthenticated
 {
@@ -21,7 +22,15 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+
+                $user = Auth::guard($guard);
+                
+                if ($user->hasRole('admin')) {
+                    return redirect(route('admin_dashboard'));
+                }
+                if ($user->hasRole('user')) {
+                    return redirect(route('dashboard'));
+                }
             }
         }
 
