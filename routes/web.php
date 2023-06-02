@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VideoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,13 +29,19 @@ Route::get('/admin_dashboard', function () {
     return view('admin_dashboard');
 })->middleware(['auth', 'admin'])->name('admin_dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::controller(ProfileController::class)->group(function () {
+    Route::get('/profile', 'edit')->name('profile.edit');
+    Route::patch('/profile', 'update')->name('profile.update');
+    Route::delete('/profile', 'destroy')->name('profile.destroy');
 });
 
-Route::get('/video-upload', [ VideoController::class, 'getVideoUploadForm' ])->name('get.video.upload');
-Route::post('/video-upload', [ VideoController::class, 'uploadVideo' ])->name('store.video');
+Route::controller(VideoController::class)->group(function () {
+    Route::get('/upload', 'index' )->name('upload');
+    Route::post('/upload', 'uploadVideo')->name('upload');
+    Route::get('/show', 'show')->name('show');
+    Route::get('/render', 'renderVideo')->name('render');
+});
+
+
 
 require __DIR__.'/auth.php';

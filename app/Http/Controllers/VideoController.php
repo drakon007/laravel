@@ -5,16 +5,32 @@ namespace App\Http\Controllers;
 use App\models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class VideoController extends Controller
 {
-    public function getVideoUploadForm() {
-        return view('video.upload'); 
+    public function index() {
+        return view('video.index'); 
+    }
+
+    public function show() {
+        return view('video.show');
+    }
+
+    public function renderVideo() {
+        $video = DB::table('videos')
+        ->select('title', 'discription', 'path' ,'category')
+        ->limit(3)
+        ->orderBy('updated_at')
+        ->get();
+        return view('video.render', ['video' => $video]);
     }
 
     public function uploadvideo(Request $request) {
         $this->validate($request, [
             'title' => 'required|string|max:254',
+            'discription' => 'required|string',
+            'category' => 'required|string|max:254',
             'video' => 'required|file|mimetypes:video/mp4',
         ]);
 
@@ -28,6 +44,8 @@ class VideoController extends Controller
             $video = new Video();
             $video->title = $request->title;
             $video->path = $filePath;
+            $video->discription = $request->discription;
+            $video->category = $request->category;
             $video->save();
 
             return back()->with('success', 'Video add');
