@@ -40,8 +40,7 @@ Route::controller(VideoController::class)->group(function () {
     Route::post('/upload', 'uploadVideo')->name('upload');
     Route::get('/show', 'show')->name('show');
     Route::get('/render', 'renderVideo')->name('render');
+    Route::get('/getvideo/{id}', 'getvideo')->name('getvideo');
 });
-
-
 
 require __DIR__.'/auth.php';
