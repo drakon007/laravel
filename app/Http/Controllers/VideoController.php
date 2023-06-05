@@ -13,8 +13,17 @@ class VideoController extends Controller
         return view('video.index');
     }
 
-    public function show() {
-        return view('video.show');
+    public function show($id) {
+        
+        $video = BD::table('videos')
+        ->where('id', '=', $id)
+        ->get();
+
+        foreach ($video as $key => $video_item) {
+            $video[$key] = (array) $video_item;
+        }
+
+        return view('video.show', ['video' => $video]);
     }
 
     public function getVideo($id) {
@@ -25,8 +34,8 @@ class VideoController extends Controller
 
     public function renderVideo() {
         $video = DB::table('videos')
-        ->select('title', 'discription', 'path' ,'category', 'id')
-        ->limit(3)
+        ->select('title', 'discription', 'path' ,'category', 'id', 'created_at')
+        ->limit(10)
         ->orderBy('updated_at')
         ->get();
 

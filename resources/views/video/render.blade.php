@@ -4,28 +4,27 @@
             {{ __('user') }}
         </h2>
     </x-slot>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-dark dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div class="flex flex-col">
-                        @foreach ($video as $element)
-                            <div class="flex flex-row">
-                                <div class="flex  mt-6 mr-6">
-                                <video width="540" height="340" controls src="http://127.0.0.1:8000/getvideo/{{ $element['id'] }}"></video>
+                        <div style="display:flex; flex-direction:row; flex-wrap: wrap;">
+                            @foreach ($video as $element)
+                                <div onclick="Url({{ $element['id'] }})" style="width: 250px; padding: 15px; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);">
+                                    <video width="250" height="150" controls src="http://127.0.0.1:8000/getvideo/{{ $element['id'] }}"></video>
+                                    <h1 style="margin-left: 80px;">{{ $element['title'] }}</h1>
+                                    <p style="margin-left: 15px;">{{  date(  $element['created_at'], "j, n, Y" )}}</p>
                                 </div>
-
-                                <div class="flex mt-6">
-                                    <div class="mr-6">
-                                        <h1 class="ml-6">{{ $element['title'] }}</h1>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
+                            @endforeach
+                        </div>
                 </div>
             </div>
         </div>
     </div>
+<script defer>
+       function Url($id) {
+        location.href = '/admin_dashboard'.$id;
+       }
+
+</script>
 </x-app-layout>

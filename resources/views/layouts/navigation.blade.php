@@ -12,7 +12,7 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('render')" :active="request()->routeIs('render')">
                         {{ __('главная') }}
                     </x-nav-link>
                 </div>
@@ -21,11 +21,7 @@
                         {{ __('создать видео') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('render')" :active="request()->routeIs('render')">
-                        {{ __('(t) all video') }}
-                    </x-nav-link>
-                </div>
+
             </div>
 
             <!-- Settings Dropdown -->

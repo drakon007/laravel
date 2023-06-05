@@ -20,7 +20,7 @@ class AdminAuthenticated
         if (Auth::check()) {
                 $user = Auth::user();
             if ($user->hasRole('user')) {
-                return redirect(route('dashboard'));
+                return redirect(route('render'));
             }
             if ($user->hasRole('admin')) {
                 return $next($request);

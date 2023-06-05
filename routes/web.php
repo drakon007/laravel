@@ -38,9 +38,11 @@ Route::controller(ProfileController::class)->group(function () {
 Route::controller(VideoController::class)->group(function () {
     Route::get('/upload', 'index' )->name('upload');
     Route::post('/upload', 'uploadVideo')->name('upload');
-    Route::get('/show', 'show')->name('show');
+    Route::get('/show/{id}', 'show')->name('show');
     Route::get('/render', 'renderVideo')->name('render');
     Route::get('/getvideo/{id}', 'getvideo')->name('getvideo');
+
+
 });
 
 require __DIR__.'/auth.php';
