@@ -13,7 +13,7 @@
                                 <div onclick="Url({{ $element['id'] }})" style="width: 250px; padding: 15px; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);">
                                     <video width="250" height="150" controls src="http://127.0.0.1:8000/getvideo/{{ $element['id'] }}"></video>
                                     <h1 style="margin-left: 80px;">{{ $element['title'] }}</h1>
-                                    <p style="margin-left: 15px;">{{  date(  $element['created_at'], "j, n, Y" )}}</p>
+                                    <p style="margin-left: 15px;">{{date('d/m/Y h:i:s', strtotime($element['created_at']))}}</p>
                                 </div>
                             @endforeach
                         </div>
@@ -22,8 +22,8 @@
         </div>
     </div>
 <script defer>
-       function Url($id) {
-        location.href = '/admin_dashboard'.$id;
+       function Url(id) {
+        window.location.href = `http://127.0.0.1:8000/show/${id}`
        }
 
 </script>

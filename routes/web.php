@@ -41,6 +41,7 @@ Route::controller(VideoController::class)->group(function () {
     Route::get('/show/{id}', 'show')->name('show');
     Route::get('/render', 'renderVideo')->name('render');
     Route::get('/getvideo/{id}', 'getvideo')->name('getvideo');
+    Route::post('/show', 'like')->name('like');
 
 
 });

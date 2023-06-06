@@ -9,19 +9,30 @@
             <div class="bg-dark dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div style="display:flex; flex-direction:row; flex-wrap: wrap;">
-                        <div style="width: 250px; padding: 15px; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);">
-                            <video controls src="http://127.0.0.1:8000/getvideo/{{ $video['id'] }}"></video>
-                            <h1 style="margin-left: 80px;">{{ $video['title'] }}</h1>
-                            <p style="margin-left: 15px;">{{ $video['created_at'] }}</p>
-                        </div>
+
+                            <div style="width: 100%; height: 40%;">
+                                @foreach ($video as $element)
+                                    <video controls  src="http://127.0.0.1:8000/getvideo/{{ $element['id'] }}"></video>
+                                    <h1 style="margin-left: 40px; font-size: 24px">Название</h1>
+                                    <p style="margin-left: 40px; font-size: 16px">{{ $element['title'] }}</p>
+                                    <h1 style="margin-left: 40px; font-size: 24px">Описание</h1>
+                                    <p style="margin-left: 20px;">{{ $element['discription'] }}</p>
+                                    <h1 style="margin-left: 40px; font-size: 24px">Дата создания</h1>
+                                    <p style="margin-left: 15px;">{{date('d/m/Y h:i:s', strtotime($element['created_at']))}}</p>
+                                    <div style="display: flex; flex-direction:row; justify-content: space-evenly">
+
+                                        <span class="like"></span>
+                                        <span class="dislike"></span>
+
+                                        </form>
+                                    </div>
+
+                                @endforeach
+                            </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<script defer>
-       function Url($id) {
-        location.href = '/admin_dashboard/'.$id;
-       }
-</script>
 </x-app-layout>

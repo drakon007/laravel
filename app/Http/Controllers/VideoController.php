@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\models\Video;
+use App\models\Raiting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -14,9 +15,10 @@ class VideoController extends Controller
     }
 
     public function show($id) {
-        
-        $video = BD::table('videos')
-        ->where('id', '=', $id)
+
+        $video = DB::table('videos')
+        ->select('title', 'discription', 'path' ,'category', 'id', 'created_at')
+        ->where('id','=', $id)
         ->get();
 
         foreach ($video as $key => $video_item) {
@@ -34,7 +36,7 @@ class VideoController extends Controller
 
     public function renderVideo() {
         $video = DB::table('videos')
-        ->select('title', 'discription', 'path' ,'category', 'id', 'created_at')
+        ->select('title',  'path', 'id', 'created_at')
         ->limit(10)
         ->orderBy('updated_at')
         ->get();
@@ -72,5 +74,25 @@ class VideoController extends Controller
         }
         return back()->with('error', 'Video dont add');
 
+    }
+
+    public function like($id_user, $id_video ,$status) {
+       if ($status == true) {
+        $rating = new Raiting();
+        $rating->video_id = $id_video;
+        $rating->user_id = $id_user;
+        $rating->rating_action = true;
+        $rating->save();
+
+        return back()->with('success', 'like');
+       } else {
+        $rating = new Raiting();
+        $rating->video_id = $id_video;
+        $rating->user_id = $id_user;
+        $rating->rating_action = false;
+        $rating->save();
+
+        return back()->with('success', 'dislike');
+       }
     }
 }
