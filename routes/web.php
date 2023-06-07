@@ -40,8 +40,10 @@ Route::controller(VideoController::class)->group(function () {
     Route::post('/upload', 'uploadVideo')->name('upload');
     Route::get('/show/{id}', 'show')->name('show');
     Route::get('/render', 'renderVideo')->name('render');
+    Route::post('/like-video/{id}', 'like')->name('like');
+    Route::post('/dislike-video/{id}', 'dislike')->name('dislike');
     Route::get('/getvideo/{id}', 'getvideo')->name('getvideo');
-    Route::post('/show', 'like')->name('like');
+    // Route::post('/show', 'like')->name('like');
 
 
 });

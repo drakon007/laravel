@@ -21,10 +21,6 @@ class VideoController extends Controller
         ->where('id','=', $id)
         ->get();
 
-        foreach ($video as $key => $video_item) {
-            $video[$key] = (array) $video_item;
-        }
-
         return view('video.show', ['video' => $video]);
     }
 
@@ -76,23 +72,39 @@ class VideoController extends Controller
 
     }
 
-    public function like($id_user, $id_video ,$status) {
-       if ($status == true) {
-        $rating = new Raiting();
-        $rating->video_id = $id_video;
-        $rating->user_id = $id_user;
-        $rating->rating_action = true;
-        $rating->save();
+    // public function like($id_user, $id_video ,$status) {
+    //    if ($status == true) {
+    //     $rating = new Raiting();
+    //     $rating->video_id = $id_video;
+    //     $rating->user_id = $id_user;
+    //     $rating->rating_action = true;
+    //     $rating->save();
 
-        return back()->with('success', 'like');
-       } else {
-        $rating = new Raiting();
-        $rating->video_id = $id_video;
-        $rating->user_id = $id_user;
-        $rating->rating_action = false;
-        $rating->save();
+    //     return back()->with('success', 'like');
+    //    } else {
+    //     $rating = new Raiting();
+    //     $rating->video_id = $id_video;
+    //     $rating->user_id = $id_user;
+    //     $rating->rating_action = false;
+    //     $rating->save();
 
-        return back()->with('success', 'dislike');
-       }
+    //     return back()->with('success', 'dislike');
+    //    }
+    // }
+
+    public function like($id) {
+        $video = Video::find($id);
+        $video->like();
+        $video->save();
+
+        return redirect()->route('render')->with('message', 'Like video');
+    }
+
+    public function dislike($id) {
+        $video = Video::find($id);
+        $video->unlike();
+        $video->save();
+
+        return redirect()->route('render')->with('message', 'Dislike video');
     }
 }
